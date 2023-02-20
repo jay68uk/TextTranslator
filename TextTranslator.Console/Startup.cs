@@ -11,6 +11,8 @@ internal static class Startup
         return Host.CreateDefaultBuilder(args)
             .ConfigureServices(
                 (_, services) => services
-                    .AddScoped<ITextServices, TextServices>());
+                    .AddScoped<ITextServices, TextServices>()
+                    .AddSingleton<ITranslate, GoogleTranslate>()
+            );
     }
 }

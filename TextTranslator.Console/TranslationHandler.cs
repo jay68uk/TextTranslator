@@ -11,13 +11,13 @@ internal class TranslationHandler
         _textService = textService;
     }
 
-    public void ProcessTranslationInput()
+    public async Task ProcessTranslationInput()
     {
-        bool invalidInput;
+        bool validInput;
 
         do
         {
-            invalidInput = false;
+            validInput = true;
             System.Console.WriteLine("Enter T (text input), F (text file) or X to exit.");
             var transType = System.Console.ReadKey();
 
@@ -27,7 +27,8 @@ internal class TranslationHandler
                 switch (transType.Key)
                 {
                     case ConsoleKey.X:
-                        return;
+                        validInput = false;
+                        break;
                     case ConsoleKey.F:
 
                         break;
@@ -35,11 +36,11 @@ internal class TranslationHandler
                         var inputText = GetText();
                         var lang = GetLanguage();
                         System.Console.WriteLine("Language is {0}", lang);
-                        _textService.ProcessTextInput(inputText!, "cy");
+                        var translation = await _textService.ProcessTextInput(inputText!, lang);
+                        ShowResult(translation, lang);
                         break;
                     default:
                         System.Console.WriteLine("Please enter X, F or T.");
-                        invalidInput = true;
                         break;
                 }
             }
@@ -48,9 +49,9 @@ internal class TranslationHandler
                 System.Console.WriteLine();
                 System.Console.WriteLine("Problem processing the translation: " + e.Message);
                 System.Console.WriteLine("Ctrl+C to quit or try again");
-                invalidInput = true;
+                validInput = false;
             }
-        } while (invalidInput);
+        } while (validInput);
     }
 
     private static string? GetText()
@@ -77,7 +78,7 @@ internal class TranslationHandler
             invalidInput = true;
             var transType = System.Console.ReadLine();
 
-            if (transType.ToUpper() == "X")
+            if (transType!.ToUpper() == "X")
             {
                 retVal = "X";
                 invalidInput = true;
@@ -91,5 +92,13 @@ internal class TranslationHandler
         } while (invalidInput);
 
         return retVal;
+    }
+
+    private static void ShowResult(string result, string lang)
+    {
+        System.Console.WriteLine();
+        System.Console.WriteLine("Translation into {0} is:", lang);
+        System.Console.WriteLine(result);
+        System.Console.WriteLine();
     }
 }

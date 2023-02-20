@@ -2,7 +2,7 @@
 
 public interface ITextServices
 {
-    string ProcessTextInput(string text, string language);
+    Task<string> ProcessTextInput(string text, string language);
     string CheckSourceLanguage(string input);
     string LoadTextFile(string path, string language);
 }

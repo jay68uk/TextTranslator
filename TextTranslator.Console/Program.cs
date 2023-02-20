@@ -12,4 +12,4 @@ Console.WriteLine("Translation is done via the Google Translate API.");
 
 var textService = host.Services.GetRequiredService<ITextServices>();
 var app = new TranslationHandler(textService);
-app.ProcessTranslationInput();
+await app.ProcessTranslationInput();

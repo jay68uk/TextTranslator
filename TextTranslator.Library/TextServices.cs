@@ -4,7 +4,24 @@ namespace TextTranslator.Library;
 
 public class TextServices : ITextServices
 {
-    public string ProcessTextInput(string text, string language)
+    private readonly ITranslate _service;
+
+    public TextServices(ITranslate service)
+    {
+        _service = service;
+    }
+
+    public string CheckSourceLanguage(string input)
+    {
+        throw new NotImplementedException();
+    }
+
+    public string LoadTextFile(string path, string language)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<string> ProcessTextInput(string text, string language)
     {
         string check;
 
@@ -23,17 +40,9 @@ public class TextServices : ITextServices
             check = text[..128];
         }
 
-        return check;
-    }
+        var translation = await _service.TranslateText(check, language);
 
-    public string CheckSourceLanguage(string input)
-    {
-        throw new NotImplementedException();
-    }
-
-    public string LoadTextFile(string path, string language)
-    {
-        throw new NotImplementedException();
+        return translation;
     }
 
 
