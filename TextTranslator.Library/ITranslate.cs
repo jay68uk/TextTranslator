@@ -2,5 +2,5 @@
 
 public interface ITranslate
 {
-    Task<string> TranslateText(string text, string language);
+    Task<TranslationModel> TranslateText(string text, string language);
 }

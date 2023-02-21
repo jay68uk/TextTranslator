@@ -12,10 +12,16 @@ public class GoogleTranslate : ITranslate
         _client = TranslationClient.Create(GoogleCredential.FromFile("key.json"));
     }
 
-    public async Task<string> TranslateText(string text, string language)
+    public async Task<TranslationModel> TranslateText(string text, string language)
     {
         var result = await _client.TranslateTextAsync(text, language);
 
-        return result.TranslatedText;
+        return new TranslationModel
+        {
+            DetectedSourceLanguage = result.DetectedSourceLanguage,
+            OriginalText = result.OriginalText,
+            TargetLanguage = result.TargetLanguage,
+            TranslatedText = result.TranslatedText
+        };
     }
 }

@@ -11,17 +11,7 @@ public class TextServices : ITextServices
         _service = service;
     }
 
-    public string CheckSourceLanguage(string input)
-    {
-        throw new NotImplementedException();
-    }
-
-    public string LoadTextFile(string path, string language)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<string> ProcessTextInput(string text, string language)
+    public async Task<TranslationModel> ProcessTextInput(string text, string language)
     {
         string check;
 
@@ -36,7 +26,9 @@ public class TextServices : ITextServices
         }
         catch (ArgumentOutOfRangeException e)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(e);
+            Console.ResetColor();
             check = text[..128];
         }
 

@@ -16,21 +16,21 @@ public class TextServicesTests
     public async Task ProcessTextInputTest_Success_En_Cy()
     {
         var result = await _service.ProcessTextInput(Input, "cy");
-        Assert.Equal(OutputCy, result);
+        Assert.Equal(OutputCy, result.TranslatedText);
     }
 
     [Fact]
     public async Task ProcessTextInputTest_Success_En_Fr()
     {
         var result = await _service.ProcessTextInput(Input, "fr");
-        Assert.Equal(OutputFr, result);
+        Assert.Equal(OutputFr, result.TranslatedText);
     }
 
     [Fact]
     public async Task ProcessTextInputTest_Success_Cy_En()
     {
         var result = await _service.ProcessTextInput(InputCy, "en");
-        Assert.Equal(OutputEn, result);
+        Assert.Equal(OutputEn, result.TranslatedText);
     }
 
     [Fact]
@@ -39,7 +39,7 @@ public class TextServicesTests
         var input = Input + Environment.NewLine + Input + Environment.NewLine + Input;
 
         var result = await _service.ProcessTextInput(input, "cy");
-        Assert.Equal(input[..128], result);
+        Assert.Contains(OutputCy, result.TranslatedText!);
     }
 
     [Fact]
